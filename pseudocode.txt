@@ -1,0 +1,105 @@
+PROJECT: Email Automation Engine V1
+
+V1 GOAL:
+Read sample email files, classify them by keywords, route them into category folders, and print summary.
+
+inbox_reader.py
+
+CLASS InboxReader:
+
+    METHOD read(inbox_folder):
+
+        IF inbox_folder does not exist:
+            raise folder error
+
+        GET all text email files inside inbox_folder
+
+        IGNORE folders
+
+        RETURN email files
+
+email_classifier.py
+
+CLASS EmailClassifier:
+
+    CATEGORY_RULES:
+        urgent → urgent, asap, immediately
+        finance → invoice, payment, receipt
+        work → meeting, project, deadline
+        promotions → discount, sale, offer
+        personal → friend, family, hello
+
+    METHOD classify(email_content):
+
+        convert email_content to lowercase
+
+        FOR each category in CATEGORY_RULES:
+
+            FOR each keyword in category keywords:
+
+                IF keyword exists in email_content:
+                    RETURN category
+
+        RETURN "others"
+
+email_router.py
+
+CLASS EmailRouter:
+
+    METHOD route(email_file, category, destination_folder):
+
+        CREATE category folder if it does not exist
+
+        BUILD destination path:
+            destination_folder / category / email_file.name
+
+        MOVE email_file to destination path
+
+        RETURN destination path
+
+
+main.py
+
+SET inbox_folder
+SET destination_folder
+
+CREATE reader
+CREATE classifier
+CREATE router
+
+emails = reader.read(inbox_folder)
+
+SET total_emails = length of emails
+SET processed_count = 0
+SET categories_used = empty set
+
+FOR each email_file in emails:
+
+    TRY:
+        READ email content from email_file
+
+        category = classifier.classify(email_content)
+
+        router.route(email_file, category, destination_folder)
+
+        processed_count += 1
+
+        ADD category to categories_used
+
+        PRINT success message
+
+    EXCEPT error:
+        PRINT failure message
+        CONTINUE to next email
+
+PRINT final summary:
+    total emails
+    processed count
+    categories used
+    completion message
+
+RESPONSIBILITY SEPARATION:
+InboxReader → finds email files
+EmailClassifier → decides category
+EmailRouter → moves emails
+main.py → controls workflow + summary + failure handling
