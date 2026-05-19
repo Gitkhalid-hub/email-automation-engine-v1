@@ -13,6 +13,7 @@ A Python-based automation system that reads sample email files, classifies them 
 - Handles unknown classifications safely
 - Prints processing summaries
 - Includes basic feedback/error handling
+- Records persistent activity logs
 
 ---
 
@@ -25,7 +26,8 @@ EMAIL_AUTOMATION_ENGINE_V1/
 │   ├── __init__.py
 │   ├── inbox_reader.py
 │   ├── email_classifier.py
-│   └── email_router.py
+│   ├── email_router.py
+│   └── logger.py
 │
 ├── sample_inbox/
 │
@@ -36,6 +38,9 @@ EMAIL_AUTOMATION_ENGINE_V1/
 │   ├── promotions/
 │   ├── personal/
 │   └── others/
+│
+├── logs/
+│   └── activity_logs.txt
 │
 ├── main.py
 ├── README.md
@@ -56,6 +61,8 @@ InboxReader
 EmailClassifier
 ↓
 EmailRouter
+↓
+ActivityLogger
 ↓
 organized_emails
 ↓
@@ -105,12 +112,26 @@ Does NOT know:
 
 ---
 
+## ActivityLogger
+
+Responsible for:
+- recording success/failure events
+- writing execution history into log files
+
+Does NOT know:
+- classification rules
+- routing decisions
+- workflow orchestration
+
+---
+
 ## main.py
 
 Responsible for:
 - orchestrating the workflow
 - tracking execution state
 - handling feedback/errors
+- updating summary state
 - printing summaries
 
 ---
@@ -167,6 +188,47 @@ For V1, unmatched emails are handled safely by routing them into the `others` ca
 
 ---
 
+# Learning Focus
+
+This project was built to practice:
+
+- systems thinking
+- responsibility separation
+- data flow architecture
+- workflow orchestration
+- filesystem automation
+- modular backend design
+- feedback system design
+- observability concepts
+- persistent logging systems
+
+---
+
+# V1.1 Upgrade — Activity Logging
+
+The system now records success and failure events into a persistent log file.
+
+Instead of only printing feedback to the terminal, the engine also writes execution history into:
+
+```text
+logs/activity_logs.txt
+```
+
+Example log entries:
+
+```text
+[SUCCESS] invoice_email.txt routed to finance
+[FAILURE] corrupted_email.txt failed: error details
+```
+
+This improves:
+- observability
+- debugging
+- execution history
+- system transparency
+
+---
+
 # Future Improvements
 
 Potential future upgrades:
@@ -175,23 +237,17 @@ Potential future upgrades:
 - recursive inbox scanning
 - real Gmail/API integration
 - smarter intent detection
-- logging system
 - priority scoring
 - email normalization pipeline
+- analytics dashboard
+- database persistence
 
 ---
 
-# Learning Focus
+# Project Status
 
-This project was built to practice:
-
-- system design thinking
-- responsibility separation
-- data flow architecture
-- workflow orchestration
-- filesystem automation
-- modular backend design
-- feedback system design
+V1 — Keyword-based email classification and routing workflow  
+V1.1 — Added persistent activity logging
 
 ---
 

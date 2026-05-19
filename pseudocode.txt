@@ -103,3 +103,24 @@ InboxReader → finds email files
 EmailClassifier → decides category
 EmailRouter → moves emails
 main.py → controls workflow + summary + failure handling
+
+V1.1 ACTIVITY LOGGER
+
+CLASS ActivityLogger:
+
+    METHOD log_success(email_file, category):
+
+        CREATE success message with:
+            email filename
+            routed category
+
+        APPEND message to logs/activity_logs.txt
+
+
+    METHOD log_failure(email_file, error):
+
+        CREATE failure message with:
+            email filename
+            error reason
+
+        APPEND message to logs/activity_logs.txt
