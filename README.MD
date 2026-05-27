@@ -1,6 +1,6 @@
 # EMAIL AUTOMATION ENGINE V1
 
-A Python-based automation system that reads sample email files, classifies them using keyword rules, routes them into category folders, and prints execution summaries.
+A Python-based automation system that reads sample email files, classifies them using keyword rules, routes them into category folders, and generates execution summaries.
 
 ---
 
@@ -11,8 +11,8 @@ A Python-based automation system that reads sample email files, classifies them 
 - Automatically creates category folders
 - Routes emails into matching folders
 - Handles unknown classifications safely
-- Prints processing summaries
-- Includes basic feedback/error handling
+- Generates processing summaries
+- Includes controlled feedback and failure handling
 - Records persistent activity logs
 
 ---
@@ -44,9 +44,10 @@ EMAIL_AUTOMATION_ENGINE_V1/
 │
 ├── main.py
 ├── README.md
+├── pseudocode.txt
+├── breakdown_engine.md
 ├── requirements.txt
-├── .gitignore
-└── pseudocode.txt
+└── .gitignore
 ```
 
 ---
@@ -66,73 +67,26 @@ ActivityLogger
 ↓
 organized_emails
 ↓
-summary reporting
+workflow summary generation
 ```
 
 ---
 
-# Responsibility Separation
+# 🧠 Architecture
 
-## InboxReader
+The system is built with layered automation design and clear responsibility separation.
 
-Responsible for:
-- detecting email files
-- returning inbox email paths
+### Architecture Layers
 
-Does NOT know:
-- classification rules
-- routing logic
-- summary tracking
-
----
-
-## EmailClassifier
-
-Responsible for:
-- checking keywords
-- deciding categories
-
-Does NOT know:
-- file movement
-- inbox scanning
-- summary reporting
-
----
-
-## EmailRouter
-
-Responsible for:
-- creating category folders
-- moving email files into matching folders
-
-Does NOT know:
-- keyword logic
-- classification reasoning
-- overall workflow state
-
----
-
-## ActivityLogger
-
-Responsible for:
-- recording success/failure events
-- writing execution history into log files
-
-Does NOT know:
-- classification rules
-- routing decisions
-- workflow orchestration
-
----
-
-## main.py
-
-Responsible for:
-- orchestrating the workflow
-- tracking execution state
-- handling feedback/errors
-- updating summary state
-- printing summaries
+| Layer | Responsibility |
+|---|---|
+| `inbox_reader.py` | Detects valid email files from the inbox |
+| `email_classifier.py` | Decides categories using keyword rules |
+| `email_router.py` | Routes email files into category folders |
+| `logger.py` | Records persistent success/failure events |
+| `main.py` | Orchestrates workflow execution and summary state |
+| `pseudocode.txt` | Planning and workflow reasoning |
+| `breakdown_engine.md` | Deep engineering analysis, debugging cognition, edge cases, and system reasoning |
 
 ---
 
@@ -156,9 +110,11 @@ Moved: invoice_email.txt -> finance
 Moved: discount_offer.txt -> promotions
 Moved: family_hello.txt -> personal
 
-10
-10
-{'finance', 'promotions', 'personal', 'work', 'others'}
+=== EMAIL AUTOMATION SUMMARY ===
+
+Total Emails: 10
+Processed Emails: 10
+Categories Used: {'finance', 'promotions', 'personal', 'work', 'others'}
 
 ALL COMPLETED!
 ```
@@ -185,6 +141,7 @@ For V1, unmatched emails are handled safely by routing them into the `others` ca
 - pathlib
 - Object-Oriented Programming (OOP)
 - File System Automation
+- Logging / Observability Concepts
 
 ---
 
@@ -201,6 +158,39 @@ This project was built to practice:
 - feedback system design
 - observability concepts
 - persistent logging systems
+
+---
+
+# Breakdown Engine
+
+The project includes a dedicated engineering investigation document:
+
+[breakdown_engine.md](breakdown_engine.md)
+
+This file dissects the system using a technical detective approach.
+
+It analyzes:
+
+- surface behavior
+- line-by-line execution
+- variable purpose
+- system flow
+- edge cases
+- structural patterns
+- classification reasoning
+- routing behavior
+- observability design
+- complexity analysis
+- Cognition and Intelligence Engineering
+- Ethics and Safety Considerations
+
+This improves:
+
+- debugging cognition
+- architectural understanding
+- reasoning transparency
+- workflow observability
+- system extensibility
 
 ---
 
@@ -222,6 +212,7 @@ Example log entries:
 ```
 
 This improves:
+
 - observability
 - debugging
 - execution history
